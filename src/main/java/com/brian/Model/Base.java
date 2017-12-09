@@ -31,6 +31,9 @@ public abstract class Base implements Utils {
 
     @Override
     public boolean closeConnection() throws SQLException{
+        if(getConnection()){
+            connection.close();
+        }
         return true;
     }
 

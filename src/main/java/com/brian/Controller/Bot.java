@@ -15,8 +15,8 @@ public class Bot  extends TelegramLongPollingBot{
             String newMessage_text ="";
             if(message_text.equals("hi")){
                 newMessage_text ="Hello, My Name is Janice, what is your name?";
-            }else{
-                newMessage_text="Brian_Not_Configured";
+            }else if(message_text.equals("Goodnight")){
+                newMessage_text="Goodnight to you too!!";
             }
             SendMessage message = new SendMessage()
                     .setChatId(chat)
