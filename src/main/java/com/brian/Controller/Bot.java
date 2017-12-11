@@ -5,41 +5,83 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Bot  extends TelegramLongPollingBot{
 
 
     public void onUpdateReceived(Update update) {
-        if(update.hasMessage() && update.getMessage().hasText()){
+        String new_message="";
+        long chat = update.getMessage().getChatId();
 
-            String message_text = update.getMessage().getText().toLowerCase();
-            long chat = update.getMessage().getChatId();
-            String newMessage_text ="";
+        if(update.hasMessage() && update.getMessage().hasText()) {
+           String message_case;
 
-            if(message_text.toLowerCase().equals("hi")){
-                newMessage_text ="Hello, My Name is Janice, what is your name?";
-            }else if(message_text.toLowerCase().equals("Goodnight")){
-                newMessage_text="Goodnight to you too!!";
-            }
-            else if(message_text.toLowerCase().equals("who made you?")){
-                newMessage_text ="I am a Program developed using Java and the Telegram API,Brian is my Developer";
-            }
-            else{
-                newMessage_text="Brian Has not Configured Response";
-            }
+           message_case = update.getMessage().getText();
+           switch (message_case.toLowerCase()) {
+               case "hello":
+                   new_message ="Hello, My name is Janice, What is your name?";
+                   break;
+
+               case "good morning":
+                    Integer time = Integer.valueOf(getDateTime());
+                    if(time<=12){
+                        new_message ="Good Morning to you too";
+
+                    }else if(time<=16){
+                        new_message = "Its Afternoon, Good Afternoon";
+                    }
+                    else{
+                        new_message="Its Evening, Good Evening";
+                    }
+                   break;
+
+               case "good evening":
+                   Integer timer = Integer.valueOf(getDateTime());
+                   if(timer<=12){
+                       new_message ="Good Morning to you too";
+
+                   }else if(timer<=16){
+                       new_message = "Its Afternoon, Good Afternoon";
+                   }
+                   else{
+                       new_message="Its Evening, Good Evening";
+                   }
+
+                   break;
+
+               case "good night":
+                   Integer tim = Integer.valueOf(getDateTime());
+                   if(tim>22){
+                       new_message ="Good Night Buddy";
+                   }else if(tim<21){
+                       new_message = "Its Very Early, Get A Life";
+                   }
+                   break;
+
+
+               default:
+                   new_message="Response Has not Yet Been Configured";
+                   break;
+           }
+       }
+
             SendMessage message = new SendMessage()
                     .setChatId(chat)
-                    .setText(newMessage_text);
+                    .setText(new_message);
             try{
                 execute(message);
-                System.out.println(message_text);
+                System.out.println(getDateTime());
+                System.out.println(new_message);
             }catch(TelegramApiException ex){
                 ex.printStackTrace();
             }
         }
-    }
+
 
     public String getBotUsername() {
         return "janiceAI_bot";
@@ -50,5 +92,13 @@ public class Bot  extends TelegramLongPollingBot{
     }
 
     public String getUsername(){return "Janice";}
+
+    public String getDateTime(){
+        SimpleDateFormat dateformat = new SimpleDateFormat("HH:mm:ss");
+        String date = dateformat.format(new Date());
+        String[] time = date.split(":");
+        String hour = time[0];
+        return hour;
+    }
 }
 
