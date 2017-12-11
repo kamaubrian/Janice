@@ -1,7 +1,9 @@
 package com.brian.Model;
 import com.brian.Model.Utils.Utils;
-
 import java.sql.*;
+/*
+    Author: Brian Kamau
+ */
 //Defines the database Connection and Schemas for Mysql
 public abstract class Base implements Utils {
 

@@ -1,6 +1,9 @@
 package com.brian.Model;
-
 import java.sql.SQLException;
+
+/**
+ * Author: Brian Kamau
+ */
 
 public class User extends Base {
 

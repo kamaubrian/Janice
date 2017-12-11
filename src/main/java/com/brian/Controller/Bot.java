@@ -1,15 +1,14 @@
 package com.brian.Controller;
-
+/*
+  Author:  Brian Kamau
+ */
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class Bot  extends TelegramLongPollingBot{
 
@@ -17,9 +16,9 @@ public class Bot  extends TelegramLongPollingBot{
     public void onUpdateReceived(Update update) {
         String new_message="";
         long chat = update.getMessage().getChatId();
+        String message_case="";
 
         if(update.hasMessage() && update.getMessage().hasText()) {
-           String message_case;
 
            message_case = update.getMessage().getText();
            switch (message_case.toLowerCase()) {
@@ -76,7 +75,7 @@ public class Bot  extends TelegramLongPollingBot{
             try{
                 execute(message);
                 System.out.println(getDateTime());
-                System.out.println(new_message);
+                System.out.println(message_case);
             }catch(TelegramApiException ex){
                 ex.printStackTrace();
             }
