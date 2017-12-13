@@ -6,12 +6,13 @@ import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+import com.brian.Model.BotCredentials;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 public class Bot  extends TelegramLongPollingBot{
-
+    BotCredentials botmodel = new BotCredentials();
 
     public void onUpdateReceived(Update update) {
         String new_message="";
@@ -83,11 +84,23 @@ public class Bot  extends TelegramLongPollingBot{
 
 
     public String getBotUsername() {
-        return "";
+        String username = "";
+        try {
+            username = botmodel.getUsername();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return username;
     }
 
     public String getBotToken() {
-        return "";
+        String bottoken ="";
+        try {
+            bottoken= botmodel.getToken();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bottoken;
     }
 
     public String getUsername(){return "Janice";}
