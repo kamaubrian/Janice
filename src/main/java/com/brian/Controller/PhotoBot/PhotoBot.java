@@ -66,6 +66,18 @@ public class PhotoBot extends TelegramLongPollingBot {
                      ex.printStackTrace();
                      }
                  }
+
+                 else if(message_text.equals("/pic")){
+
+                    SendPhoto benz = new SendPhoto().setChatId(chat_id).setPhoto("https://image.ibb.co/mX2LQR/164530279_mercedes_wallpapers.jpg").setCaption("Benz");
+                    try{
+                        sendPhoto(benz);
+                    }catch(TelegramApiException ex){
+                        ex.printStackTrace();
+                    }
+
+
+            }
             }
 
 
