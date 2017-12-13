@@ -83,11 +83,11 @@ public class Bot  extends TelegramLongPollingBot{
 
 
     public String getBotUsername() {
-        return "janiceAI_bot";
+        return "";
     }
 
     public String getBotToken() {
-        return "451734586:AAFwKvWjCdgPdXZR5wBLC_ruYD1zkd-mGGk";
+        return "";
     }
 
     public String getUsername(){return "Janice";}
