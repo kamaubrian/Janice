@@ -1,4 +1,4 @@
-package com.brian.Controller;
+package com.brian.Controller.MessageBot;
 
 /*
    Author: Brian Kamau
