@@ -8,7 +8,7 @@ import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,23 +18,23 @@ public class PhotoBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
 
-        if(update.hasMessage() && update.getMessage().hasText()){
+        if (update.hasMessage() && update.getMessage().hasText()) {
             String message_text = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
 
-            if(message_text.equals("/start")){
+            if (message_text.equals("/start")) {
                 SendMessage message = new SendMessage().setChatId(chat_id).setText(message_text);
-                try{
+                try {
                     execute(message);
-                }catch(TelegramApiException e){
+                } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
-            }else if(message_text.equals("/markup")){
+            } else if (message_text.equals("/markup")) {
                 SendMessage message = new SendMessage().setChatId(chat_id).setText("Here is Your Keyboard");
                 ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
                 List<KeyboardRow> keyboardRowList = new ArrayList<>();
 
-                KeyboardRow row  = new KeyboardRow();
+                KeyboardRow row = new KeyboardRow();
                 row.add("Row 1 Button 1");
                 row.add("Row 1 Button 2");
                 row.add("Row 1 Button 3");
@@ -51,18 +51,26 @@ public class PhotoBot extends TelegramLongPollingBot {
 
                 message.setReplyMarkup(keyboardMarkup);
 
-                try{
+                try {
                     execute(message);
-
-
-                }catch(TelegramApiException e){
+                } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
 
+            } else if (message_text.equals("Row 1 Button 1")) {
+
+                SendPhoto message = new SendPhoto().setChatId(chat_id).setPhoto("https://image.ibb.co/jSPxN6/mt_longonot.jpg").setCaption("Photo");
+                   try{
+                        sendPhoto(message);
+                   }catch(TelegramApiException ex){
+                     ex.printStackTrace();
+                     }
+                 }
             }
-        }
+
 
     }
+
 
     @Override
     public String getBotUsername() {
