@@ -24,7 +24,7 @@ public class Bot  extends TelegramLongPollingBot{
            message_case = update.getMessage().getText();
            switch (message_case.toLowerCase()) {
                case "hello":
-                   new_message ="Hello, My name is Janice, What is your name?";
+                   new_message ="Hello "+update.getMessage().getChat().getFirstName()+", My name is Janice";
                    break;
 
                case "good morning":

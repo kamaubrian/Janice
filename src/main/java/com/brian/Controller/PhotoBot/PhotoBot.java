@@ -69,7 +69,7 @@ public class PhotoBot extends TelegramLongPollingBot {
                      }
                  }
 
-                 else if(message_text.equals("/pic")){
+                 else if(message_text.equals("brian fav car")){
 
                     SendPhoto benz = new SendPhoto().setChatId(chat_id).setPhoto("https://image.ibb.co/mX2LQR/164530279_mercedes_wallpapers.jpg").setCaption("Benz");
                     try{
