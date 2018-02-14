@@ -8,9 +8,9 @@ import java.sql.*;
 public abstract class Base implements Utils {
 
     public static String driver = "com.mysql.cj.Driver";
-    public static String username = "root";
-    public static String password = "wamatu";
-    public static String url ="jdbc:mysql://localhost:3306/TelegramBot?useSSL=false";
+    public static String username = "";
+    public static String password = "";
+    public static String url ="";
     protected Connection connection = null;
     protected Statement statement = null;
     protected ResultSet resultSet = null;
@@ -33,7 +33,6 @@ public abstract class Base implements Utils {
             ex.printStackTrace();
         }
     }
-
     @Override
     public boolean getConnection() throws SQLException{
         try{
@@ -41,7 +40,9 @@ public abstract class Base implements Utils {
             connection=DriverManager.getConnection(url,username,password);
 
         }catch(Exception ex){
+
             ex.printStackTrace();
+            return false;
         }
         return true;
     }

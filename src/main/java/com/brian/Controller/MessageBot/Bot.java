@@ -18,6 +18,7 @@ public class Bot  extends TelegramLongPollingBot{
         String new_message="";
         long chat = update.getMessage().getChatId();
         String message_case="";
+        String user_first = update.getMessage().getChat().getFirstName();
 
         if(update.hasMessage() && update.getMessage().hasText()) {
 
@@ -75,6 +76,7 @@ public class Bot  extends TelegramLongPollingBot{
                     .setText(new_message);
             try{
                 execute(message);
+                System.out.println("Message Sent From: "+user_first);
                 System.out.println(getDateTime());
                 System.out.println(message_case);
             }catch(TelegramApiException ex){
@@ -111,6 +113,9 @@ public class Bot  extends TelegramLongPollingBot{
         String[] time = date.split(":");
         String hour = time[0];
         return hour;
+    }
+    public String getInstanceUsername() throws TelegramApiException{
+        return null;
     }
 }
 
