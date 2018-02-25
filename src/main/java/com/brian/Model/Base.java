@@ -7,10 +7,10 @@ import java.sql.*;
 //Defines the database Connection and Schemas for Mysql
 public abstract class Base implements Utils {
 
-    public static String driver = "com.mysql.cj.Driver";
+    public static String driver = "com.mysql.Driver";
     public static String username = "root";
     public static String password = "wamatu";
-    public static String url ="http://192.168.129.110/TelegramBot";
+    public static String url ="jdbc:mysql://localhost:3306/TelegramBot";
     protected Connection connection = null;
     protected Statement statement = null;
     protected ResultSet resultSet = null;

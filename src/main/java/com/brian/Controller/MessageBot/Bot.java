@@ -7,10 +7,10 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import com.brian.Model.BotCredentials;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 public class Bot  extends TelegramLongPollingBot{
     BotCredentials botmodel = new BotCredentials();
 
@@ -23,52 +23,7 @@ public class Bot  extends TelegramLongPollingBot{
         if(update.hasMessage() && update.getMessage().hasText()) {
 
            message_case = update.getMessage().getText();
-           switch (message_case.toLowerCase()) {
-               case "hello":
-                   new_message ="Hello "+update.getMessage().getChat().getFirstName()+", My name is Janice";
-                   break;
 
-               case "good morning":
-                    Integer time = Integer.valueOf(getDateTime());
-                    if(time<=12){
-                        new_message ="Good Morning to you too";
-
-                    }else if(time<=16){
-                        new_message = "Its Afternoon, Good Afternoon";
-                    }
-                    else{
-                        new_message="Its Evening, Good Evening";
-                    }
-                   break;
-
-               case "good evening":
-                   Integer timer = Integer.valueOf(getDateTime());
-                   if(timer<=12){
-                       new_message ="Good Morning to you too";
-
-                   }else if(timer<=16){
-                       new_message = "Its Afternoon, Good Afternoon";
-                   }
-                   else{
-                       new_message="Its Evening, Good Evening";
-                   }
-
-                   break;
-
-               case "good night":
-                   Integer tim = Integer.valueOf(getDateTime());
-                   if(tim>22){
-                       new_message ="Good Night Buddy";
-                   }else if(tim<21){
-                       new_message = "Its Very Early, Get A Life";
-                   }
-                   break;
-
-
-               default:
-                   new_message="Response Has not Yet Been Configured";
-                   break;
-           }
        }
 
             SendMessage message = new SendMessage()
