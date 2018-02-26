@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Bot  extends TelegramLongPollingBot{
@@ -24,6 +25,7 @@ public class Bot  extends TelegramLongPollingBot{
     public void onUpdateReceived(Update update) {
         String new_message="";
         JSONParser parser = new JSONParser();
+        ArrayList<String> ans= new ArrayList<>();
         long chat = update.getMessage().getChatId();
         String message_case="";
         String user_first = update.getMessage().getChat().getFirstName();
@@ -35,18 +37,26 @@ public class Bot  extends TelegramLongPollingBot{
                Object dictionary = parser.parse(new FileReader("dictionary.json"));
                JSONObject jsonObject = (JSONObject) dictionary;
                JSONArray answer = (JSONArray) jsonObject.get(message_case.toLowerCase());
-               if(!answer.isEmpty()){
+
+               if(answer!=null){
                    new_message = answer.toString();
                }else{
                    new_message = "Word Not Found";
+                   System.out.println(new_message);
                }
 
            }catch(FileNotFoundException ex){
                ex.printStackTrace();
+               new_message = "Word Not Found";
+
            } catch (ParseException e) {
                e.printStackTrace();
+               new_message = "Word Not Found";
+
            } catch (IOException e) {
                e.printStackTrace();
+               new_message = "Word Not Found";
+
            }
 
         }
@@ -60,6 +70,8 @@ public class Bot  extends TelegramLongPollingBot{
                 System.out.println(getDateTime());
                 System.out.println(message_case);
             }catch(TelegramApiException ex){
+                new_message = "Word Not Found";
+
                 ex.printStackTrace();
             }
         }
