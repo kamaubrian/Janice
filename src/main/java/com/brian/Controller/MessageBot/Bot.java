@@ -3,6 +3,7 @@ package com.brian.Controller.MessageBot;
   Author:  Brian Kamau
  */
 
+import com.vdurmont.emoji.EmojiParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -37,11 +38,14 @@ public class Bot  extends TelegramLongPollingBot{
                Object dictionary = parser.parse(new FileReader("dictionary.json"));
                JSONObject jsonObject = (JSONObject) dictionary;
                JSONArray answer = (JSONArray) jsonObject.get(message_case.toLowerCase());
-
-               if(answer!=null){
+               if(message_case.equals("/start")){
+                   new_message ="Hello "+user_first+" ,My Name is Jarvis, a bot, You can tell ask me any " +
+                           "word, I will search for its meaning";
+               }
+               else if(answer!=null){
                    new_message = answer.toString();
                }else{
-                   new_message = "Word Not Found";
+                   new_message = EmojiParser.parseToUnicode("Word Has Not Been found :cry:");
                    System.out.println(new_message);
                }
 
@@ -60,7 +64,6 @@ public class Bot  extends TelegramLongPollingBot{
            }
 
         }
-
             SendMessage message = new SendMessage()
                     .setChatId(chat)
                     .setText(new_message);
@@ -109,5 +112,8 @@ public class Bot  extends TelegramLongPollingBot{
     public String getInstanceUsername() throws TelegramApiException{
         return null;
     }
+
+    public String testCaseString(){return "abcd";}
+
 }
 

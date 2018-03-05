@@ -18,8 +18,9 @@ public class EBot extends TelegramLongPollingBot {
             long user_id = update.getMessage().getChat().getId();
             String message_text = update.getMessage().getText();
             String answer = EmojiParser.parseToUnicode("Here is a smile emoji: :smile:\n\n Here is alien emoji: :alien:");
+            String answer2 = EmojiParser.parseToAliases(message_text);
             long chat_id = update.getMessage().getChatId();
-            SendMessage message = new SendMessage().setChatId(chat_id).setText(answer);
+            SendMessage message = new SendMessage().setChatId(chat_id).setText(answer2);
             try{
                 sendMessage(message);
             }catch (TelegramApiException e){
