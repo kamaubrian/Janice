@@ -7,6 +7,10 @@ import com.vdurmont.emoji.EmojiParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -25,6 +29,7 @@ public class Bot  extends TelegramLongPollingBot{
 
     public void onUpdateReceived(Update update) {
         String new_message="";
+        String subUrl="";
         JSONParser parser = new JSONParser();
         ArrayList<String> ans= new ArrayList<>();
         long chat = update.getMessage().getChatId();
@@ -34,22 +39,45 @@ public class Bot  extends TelegramLongPollingBot{
         if(update.hasMessage() && update.getMessage().hasText()) {
 
            message_case = update.getMessage().getText();
-           try{
-               Object dictionary = parser.parse(new FileReader("dictionary.json"));
-               JSONObject jsonObject = (JSONObject) dictionary;
-               JSONArray answer = (JSONArray) jsonObject.get(message_case.toLowerCase());
-               if(message_case.equals("/start")){
-                   new_message ="Hello "+user_first+" ,My Name is Jarvis, a bot, You can tell ask me any " +
-                           "word, I will search for its meaning";
+
+           try {
+               ArrayList<String> information = new ArrayList<>();
+               //Object dictionary = parser.parse(new FileReader("dictionary.json"));
+               //JSONObject jsonObject = (JSONObject) dictionary;
+               //JSONArray answer = (JSONArray) jsonObject.get(message_case.toLowerCase());
+               if (message_case.equals("/start")) {
+                   new_message = "Hello " + user_first + " ,My Name is Jarvis, a bot, You can tell ask me anything " +
+                           ",";
                }
-               else if(answer!=null){
+               if(message_case.length()<1){
+                   new_message = EmojiParser.parseToUnicode("Query is too short :cry:");
+               }
+               if(message_case.length()>30){
+                   new_message = EmojiParser.parseToUnicode("Query is too Long :cold_sweat:");
+               }else{
+                   try{
+                       subUrl = message_case.substring(0,1).toUpperCase()+message_case.substring(1);
+                       Document document = Jsoup.connect("http://en.wikipedia.org/wiki/"+subUrl).get();
+                       Elements title = document.select("H1");
+                       Elements tags = document.select("p");
+                      /* if(tags.toString().length()>4096){
+                           new_message = "Response Length Surpassed";
+                       }*/
+                       new_message = tags.text().substring(0,2000);
+                   }catch(Exception ex){
+                       new_message = "Could Not Find Query";
+                       ex.printStackTrace();
+                   }
+               }
+
+               /*else if(answer!=null){
                    new_message = answer.toString();
                }else{
                    new_message = EmojiParser.parseToUnicode("Word Has Not Been found :cry:");
                    System.out.println(new_message);
-               }
+               }*/
 
-           }catch(FileNotFoundException ex){
+      /*     }catch(FileNotFoundException ex){
                ex.printStackTrace();
                new_message = "Word Not Found";
 
@@ -61,6 +89,9 @@ public class Bot  extends TelegramLongPollingBot{
                e.printStackTrace();
                new_message = "Word Not Found";
 
+           }*/
+           }catch(Exception ex){
+               ex.printStackTrace();
            }
 
         }
@@ -78,7 +109,6 @@ public class Bot  extends TelegramLongPollingBot{
                 ex.printStackTrace();
             }
         }
-
 
     public String getBotUsername() {
         String username = "";
