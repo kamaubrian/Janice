@@ -63,7 +63,13 @@ public class Bot  extends TelegramLongPollingBot{
                       /* if(tags.toString().length()>4096){
                            new_message = "Response Length Surpassed";
                        }*/
-                       new_message = tags.text().substring(0,2000);
+                      if(tags.text().length()<200){
+                          new_message = tags.text().substring(0,200);
+                      }else{
+                          new_message = tags.text().substring(0,1000);
+                      }
+
+                       System.out.println(new_message);
                    }catch(Exception ex){
                        new_message = "Could Not Find Query";
                        ex.printStackTrace();
