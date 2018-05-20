@@ -4,6 +4,7 @@ import java.util.Scanner;
    Author: Brian Kamau
  */
 import com.brian.Controller.PhotoBot.PhotoBot;
+import com.brian.Controller.xyzBank.CustomerService;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
@@ -24,7 +25,7 @@ public class Main {
                 Thread.sleep(200);
             }
             System.out.println("Telegram Bots by: [Brian Kamau]");
-            System.out.println("Choose Bot\n1.Message Bot\n2.Photo Bot");
+            System.out.println("Choose Bot\n1.Message Bot\n2.Photo Bot\n3.XYZ Bank");
             choice = scanner.nextInt();
             switch(choice){
 
@@ -37,7 +38,10 @@ public class Main {
                     System.out.println("Photo Bot is Running");
                     botApi.registerBot(new PhotoBot());
                     break;
-
+                case 3:
+                    System.out.println("Running XYZ Bank Service");
+                    botApi.registerBot(new CustomerService());
+                    break;
                 default:
                     System.out.println("Invalid Choice");
                     break;

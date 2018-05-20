@@ -11,7 +11,7 @@ public class BaseTest {
     @Test
     public void testDatabaseConnection() throws SQLException{
         Base instance = new BaseImpl();
-        boolean expectedResult = false;
+        boolean expectedResult = true;
         boolean result = instance.getConnection();
         assertEquals(expectedResult,result);
     }
