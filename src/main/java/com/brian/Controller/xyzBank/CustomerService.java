@@ -1,7 +1,10 @@
 package com.brian.Controller.xyzBank;
 
 import com.brian.Model.BotCredentials;
+import org.telegram.telegrambots.api.methods.send.SendDocument;
+import org.telegram.telegrambots.api.methods.send.SendLocation;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
@@ -50,6 +53,35 @@ public class CustomerService  extends TelegramLongPollingBot {
                         ex.printStackTrace();
                     }
 
+                }else if(new_message.toLowerCase().equals("Where is XYZ Bank HQ ?".toLowerCase())){
+                    SendPhoto local = new SendPhoto().setChatId(chat).setPhoto("https://image.ibb.co/nNOGGT/xyz.jpg")
+                            .setCaption("We are Located at 121-5215 Daystar Plaza https://goo.gl/maps/vWnLXze6RL12");
+
+
+                    try{
+                        sendPhoto(local);
+                    }catch (TelegramApiException ex ){
+                        ex.printStackTrace();
+                    }
+                }else if(new_message.toLowerCase().equals("What are our interest Rates ?".toLowerCase())){
+                    SendDocument document = new SendDocument().setChatId(chat).setDocument("http://www.pdf995.com/samples/pdf.pdf").setCaption("Please See" +
+                            " Our Rates for long term and short term Loans and Deposits");
+
+                    try{
+                        sendDocument(document);
+                    }catch (TelegramApiException ex){
+                        ex.printStackTrace();
+                    }
+
+                }else if(new_message.toLowerCase().equals("Access Services through USSD".toLowerCase())){
+                    response = "To Access our USSD Service,Dial *384*564# or visit http://xyzbank.digiplan.tech/";
+                    SendMessage sendMessage = new SendMessage().setChatId(chat).setText(response);
+
+                    try{
+                        execute(sendMessage);
+                    }catch (TelegramApiException ex){
+                        ex.printStackTrace();
+                    }
                 }
 
             }catch (Exception ex){
