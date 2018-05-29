@@ -6,8 +6,11 @@ import org.telegram.telegrambots.api.methods.send.SendLocation;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
@@ -45,6 +48,13 @@ public class CustomerService  extends TelegramLongPollingBot {
                     keyboardRow.add("What are our interest Rates ?");
                     keyboardRow.add("Access Services through USSD");
                     keyboardRowList.add(keyboardRow);
+
+                    keyboardRow = new KeyboardRow();
+                    keyboardRow.add("Investments");
+                    keyboardRow.add("Api Connecting");
+                    keyboardRow.add("Banking");
+                    keyboardRowList.add(keyboardRow);
+
                     replyKeyboardMarkup.setKeyboard(keyboardRowList);
                     responses.setReplyMarkup(replyKeyboardMarkup);
                     try{
@@ -56,7 +66,6 @@ public class CustomerService  extends TelegramLongPollingBot {
                 }else if(new_message.toLowerCase().equals("Where is XYZ Bank HQ ?".toLowerCase())){
                     SendPhoto local = new SendPhoto().setChatId(chat).setPhoto("https://image.ibb.co/nNOGGT/xyz.jpg")
                             .setCaption("We are Located at 121-5215 Daystar Plaza https://goo.gl/maps/vWnLXze6RL12");
-
 
                     try{
                         sendPhoto(local);
@@ -80,6 +89,23 @@ public class CustomerService  extends TelegramLongPollingBot {
                     try{
                         execute(sendMessage);
                     }catch (TelegramApiException ex){
+                        ex.printStackTrace();
+                    }
+                }
+                else if(new_message.equalsIgnoreCase("Investments")){
+                    String respons="Showing Investments";
+                    InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+                    List<List<InlineKeyboardButton>> rowInLine = new ArrayList<>();
+                    List<InlineKeyboardButton> inlineKeyboardButtons = new ArrayList<>();
+                    inlineKeyboardButtons.add(new InlineKeyboardButton().setText("Updated MessageText").setCallbackData("UPDATE"));
+                    rowInLine.add(inlineKeyboardButtons);
+                    inlineKeyboardMarkup.setKeyboard(rowInLine);
+                    SendMessage message = new SendMessage().setChatId(chat).setText(respons);
+                    message.setReplyMarkup(inlineKeyboardMarkup);
+                    try{
+                        execute(message);
+
+                    }catch(TelegramApiException ex){
                         ex.printStackTrace();
                     }
                 }
